@@ -10,16 +10,37 @@ import UIKit
 
 class ResultsViewController: UIViewController {
     
-    // 1. Избавиться от кнопкп возврата
-    // 2. Передать сюда массив с выбранными ответами
-    // 3. Определить то животное, которое встречается чаще всего
-    // 4. Отобразить результаты
-    // 5. Подумать над логикой определени индекса в соответсвии с диапазоном
+    @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var resultDescriptionLabel: UILabel!
+
+    var answersChoosen: [Answer] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        
+        showResult()
     }
-
+    
+    private func showResult() {
+        let resultAnimal = Dictionary(grouping: answersChoosen, by: { $0.type })
+        .sorted(by: { $0.value.count > $1.value.count }).first?.key
+        
+        switch resultAnimal {
+        case .cat:
+            resultLabel.text = "Вы - " + "🐱"
+            resultDescriptionLabel.text = AnimalType.cat.definition
+        case .dog:
+            resultLabel.text = "Вы - " + "🐶"
+            resultDescriptionLabel.text = AnimalType.dog.definition
+        case .rabbit:
+            resultLabel.text = "Вы - " + "🐰"
+            resultDescriptionLabel.text = AnimalType.rabbit.definition
+        case .turtle:
+            resultLabel.text = "Вы - " + "🐢"
+            resultDescriptionLabel.text = AnimalType.turtle.definition
+        case .none: break
+        }
+    }
 }

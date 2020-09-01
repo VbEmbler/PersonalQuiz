@@ -61,22 +61,20 @@ class QuestionsViewController: UIViewController {
     }
     
     @IBAction func rangedAnswerButtonPressed() {
-        let index = lrintf(rangedSlider.value * Float(currentAnswers.count - 1))
+        let index = lrintf(rangedSlider.value)
         answersChoosen.append(currentAnswers[index])
         nextQuestion()
     }
     
 
-    /*
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "resultSegue" {
+            guard let navigationVC = segue.destination as? ResultsViewController else { return }
+            navigationVC.answersChoosen = answersChoosen
+        }
     }
-    */
-
 }
 
 // MARK: - Private Methodx
